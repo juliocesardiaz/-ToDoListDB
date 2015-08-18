@@ -16,6 +16,7 @@
         protected function tearDown()
         {
             Category::deleteAll();
+            Task::deleteAll();
         }
 
         function test_getName()
@@ -121,11 +122,12 @@
             $test_category_id = $test_Category->getId();
             
             $description = "Email client";
-            $test_task = new Task($description, $test_category_id, $id);
+            $due_date = 0000;
+            $test_task = new Task($description, $test_category_id, $due_date, $id);
             $test_task->save();
             
             $description2 = "Meet with boss";
-            $test_task2 = new Task($description2, $test_category_id, $id);
+            $test_task2 = new Task($description2, $test_category_id, $due_date, $id);
             $test_task2->save();
             
             $result = $test_Category->getTasks();
