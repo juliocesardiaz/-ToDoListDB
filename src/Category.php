@@ -27,8 +27,8 @@
 
         function save()
         {
-            $GLOBALS['DB']->exec("INSERT INTO categories (name) VALUES ('{$this->getName()}')");
-            $result_id = $GLOBALS['DB']->lastInsertId();
+            $GLOBALS['DB']->exec("INSERT INTO categories (name) VALUES ('{$this->getName()}');");
+            $this->id = $GLOBALS['DB']->lastInsertId();
         }
 
         static function getAll()
@@ -60,6 +60,20 @@
                 }
             }
             return $found_category;
+        }
+        
+        function getTasks()
+        {
+            $tasks = array();
+            $returned_tasks = $GLOBALS['DB']->query("SELECT * FROM tasks WHERE category_id = {$this->getId()};");
+            foreach($returned_tasks as $task) {
+                $description = $task['description'];
+                $id = $task['id'];
+                $category_id = $task['category_id'];
+                $new_Task = new Task($description, $category_id, $id);
+                array_push($tasks, $new_Task);
+            }
+            return $tasks;
         }
     }
 ?>

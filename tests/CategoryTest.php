@@ -110,5 +110,27 @@
             //Assert
             $this->assertEquals($test_Category, $result);
         }
+        
+        function testGetTasks()
+        {
+            $name = "Work stuff";
+            $id = null;
+            $test_Category = new Category($name, $id);
+            $test_Category->save();
+            
+            $test_category_id = $test_Category->getId();
+            
+            $description = "Email client";
+            $test_task = new Task($description, $test_category_id, $id);
+            $test_task->save();
+            
+            $description2 = "Meet with boss";
+            $test_task2 = new Task($description2, $test_category_id, $id);
+            $test_task2->save();
+            
+            $result = $test_Category->getTasks();
+            
+            $this->assertEquals([$test_task, $test_task2], $result);
+        }
     }
 ?>
